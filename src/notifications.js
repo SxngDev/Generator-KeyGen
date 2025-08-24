@@ -1,0 +1,3 @@
+export async function notifyDiscord(content){ const url = process.env.DISCORD_WEBHOOK_URL; if(!url) return; try{ await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content})}); }catch{} }
+export async function notifyTelegram(text){ const t=process.env.TELEGRAM_BOT_TOKEN,c=process.env.TELEGRAM_CHAT_ID; if(!t||!c) return; try{ await fetch(`https://api.telegram.org/bot${t}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:c,text})}); }catch{} }
+export async function notifyAll(msg){ await Promise.all([notifyDiscord(msg), notifyTelegram(msg)]); }
